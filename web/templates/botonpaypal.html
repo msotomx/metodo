@@ -1,0 +1,97 @@
+<!-- 
+<script src="https://www.paypal.com/sdk/js?client-id=BAAzB3_y5Sl-zG0xeVTY_n-wi3UXZrHcglMUEwlkxTYZT4ZoKDg3duTm0CCuDgVZGujL4UwY4LYGdk7nPw&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
+<div id="paypal-container-K7AEJ77JANWK4"></div>
+<script>
+  paypal.HostedButtons({
+    hostedButtonId: "K7AEJ77JANWK4",
+  }).render("#paypal-container-K7AEJ77JANWK4")
+</script>
+
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón de PayPal</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID"></script>
+</head>
+<body>
+    <div id="paypal-button-container"></div>
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: '10.00' } // Ajusta el monto
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    window.location.href = `dw?PayeID=${data.orderID}`;
+                });
+            },
+            onCancel: function (data) {
+                window.location.href = 'checkout';
+            }
+        }).render('#paypal-button-container');
+    </script>
+</body>
+</html>
+
+<!-- boton de paypal con django-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botón de PayPal</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID"></script>
+</head>
+<body>
+    <div id="paypal-button-container"></div>
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: '10.00' } // Ajusta el monto
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    window.location.href = `/procesar_pago/?PayeID=${data.orderID}`;
+                });
+            },
+            onCancel: function (data) {
+                window.location.href = '/checkout/';
+            }
+        }).render('#paypal-button-container');
+    </script>
+</body>
+</html>
+
+<!-- VISTA EN DJANGO -->
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
+def procesar_pago(request):
+    paye_id = request.GET.get('PayeID', None)
+    if paye_id:
+        # Procesar el pago con la API de PayPal o guardarlo en la base de datos
+        return HttpResponse(f"Pago aprobado con PayeID: {paye_id}")
+    else:
+        return redirect('/checkout/')
+
+
+<!-- URL DJANGO -->
+from django.urls import path
+from .views import procesar_pago
+
+urlpatterns = [
+    path('procesar_pago/', procesar_pago, name='procesar_pago'),
+]
+
