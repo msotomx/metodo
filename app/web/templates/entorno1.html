@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hijos Felices | Entorno</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <div class="site-header">
+        <h1>La Comunicación con Nuestros Hijos</h1>
+    </div>
+</head>
+<body>
+    <div class="space"></div>
+    
+    <div class="container">
+        <h2>Quieres Mejorar la Comunicación con tu Hijo</h2>
+        <div class="space"></div>
+    
+        <div class="imagen">
+            <h3>¿Te preocupa la rebeldía de tu hijo?</h3>
+            <!-- <p>Has empezado a notar que tu hijo contesta mal, no quiere hablar, se encierra en su habitación</p> -->
+            
+        </div>
+        <div class="space"></div>
+        <div class="imagen">
+            <h3>Hay discusiones y conflictos frecuentes en la familia</h3>
+            <!-- <p>Son cada vez más frecuentes las discusiones por cosas sin importancia</p> -->
+        </div>
+        <div class="space"></div>
+        <div class="imagen">
+            <h3>Te gustaría establecer límites claros, sin necesidad de convencer a tu hijo de seguirlos</h3>
+            <!-- <p>Aprenderás como definir reglas y límites en casa, sin discusiones</p> -->
+        </div>
+        <div class="space"></div>
+        <div class="imagen">
+            <h3>Te preocupa el comportamiento de tu hijo</h3>
+            <!-- <p>Quieres eliminar esas actitudes negativas?
+               Muchas veces no sabemos exactamente que hacer. 
+            </p> -->
+        </div>
+        
+        <div class="space"></div>
+        <div class="space"></div>
+        <a class="boton" href="{% url 'web:entorno2' %}">  <!-- 3 OJO-->    
+            <h3>Continuar</h3>
+         </a>
+        
+    </div>
+
+</body>
+</html>

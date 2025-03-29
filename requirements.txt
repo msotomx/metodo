@@ -1,5 +1,0 @@
-django==4.2
-Pillow  # manejo de imagenes
-mysqlclient
-django-paypal
-python-decouple
