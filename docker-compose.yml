@@ -5,10 +5,10 @@ services:
     command: gunicorn metodo.wsgi:application --bind 0.0.0.0:3762
     volumes:
       - ./app:/usr/src/app/
-      #- ./app/static:/usr/src/app/static
+      - ./app/static:/usr/src/app/static
       - media_volume:/usr/src/app/media
     ports:
-      - 3762:3762
+      - 80:8000
     depends_on:
       - mysql
     env_file:
@@ -21,10 +21,10 @@ services:
     container_name: metodo.proxy
     build: ./nginx
     volumes:
-    #  - ./app/static:/usr/src/app/static
+      - ./app/static:/usr/src/app/static
       - media_volume:/usr/src/app/media
     ports:
-      - "8000:8000"
+      - "80:80"
     depends_on:
       - web
     networks:
