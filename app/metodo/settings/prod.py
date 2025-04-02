@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 #]
 
 # Para producción (cuando uses collectstatic)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # STATIC_ROOT = '/usr/src/app/metodo/staticfiles'
 
 
