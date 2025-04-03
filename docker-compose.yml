@@ -5,7 +5,7 @@ services:
     command: gunicorn metodo.wsgi:application --bind 0.0.0.0:3762
     volumes:
       - ./app:/usr/src/app/
-      - ./app/static:/usr/src/app/static
+      - ./app/staticfiles:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/media
     ports:
       - 3762:3762
@@ -21,7 +21,7 @@ services:
     container_name: metodo.proxy
     build: ./nginx
     volumes:
-      - ./app/static:/usr/src/app/static
+      - ./app/staticfiles:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/media
     ports:
       - "80:80"
