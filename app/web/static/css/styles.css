@@ -23,10 +23,11 @@
 .site-header {  
     /* --fondo-amarillo: hsl(53, 100%, 51%); */
     margin-top: 0;
-    --fondo-header: hsl(110,100%,80%);
+    /* --fondo-header: hsl(110,100%,80%);  */
+    --fondo-header: hsl(95,35%,50%);  /* #87a34e */
     height: 6rem;
-     display: block;  
-    background: url(../img/logoHF.jpg) no-repeat, 
+    display: block;  
+    background: url(../img/LOGO-CUADRADO.jpg) no-repeat, 
                 var(--fondo-header);
     background-position: 1em;
     background-size: contain;
@@ -108,6 +109,7 @@ p {
 }
 .container {
     --fondo: hsl(90,100%,80%); /* verde claro */
+    /* --fondo: hsl(86,17%,63%); */
     /* --fondo: hsl(60, 85%, 75%); amarillo claro */
     width: auto;
     height: auto;
@@ -182,6 +184,7 @@ p {
     
     h5 {
         font-style: normal;
+        padding: 0;
         line-height: 1.3;
         color: white;
     }

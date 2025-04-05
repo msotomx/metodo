@@ -4,3 +4,4 @@ django-paypal
 python-decouple
 gunicorn
 whitenoise
+paypalrestsdk

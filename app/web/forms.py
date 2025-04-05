@@ -1,9 +1,10 @@
 from django import forms
+from .models import Cliente
 
 class DateInput(forms.DateInput):
     input_type='date'
 
-class ClienteForm(forms.Form):
+class ClienteForm2(forms.Form):
     SEXO_CHOICES = (
         ('M','Masculino'),
         ('F','Femenino')
@@ -24,3 +25,9 @@ class ClienteForm(forms.Form):
     ciudad_entrega = forms.CharField(label='Ciudad de Entrega',max_length=100)
     campo_libre = forms.CharField(label='Campo Libre',widget=forms.Textarea)
     comentarios = forms.CharField(label='Comentarios',widget=forms.Textarea)
+
+
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ['nombre', 'email', 'telefono', 'ciudad']

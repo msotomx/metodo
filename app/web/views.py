@@ -5,6 +5,8 @@ from .models import Categoria, Proveedor, Producto, Cliente, Pedido, PedidoDetal
 
 from django.conf import settings
 from django import template
+from datetime import date
+
 # Paypal de prueba
 # from paypal.standard.forms import PayPalPaymentsForm
 
@@ -479,11 +481,11 @@ def checkout(request):
     
 
 def dw(request):
-    paypalId = request.GET.get('PayerID',None)
+    #paypalId = request.GET.get('PayerID',None)
     # print("paypalId al inicio de dw ",paypalId)
-    context = {}
-    if paypalId is None:
-        return redirect('/entorno4')
+    #context = {}
+    #if paypalId is None:
+    #    return redirect('/entorno4')
 
     return render(request,'dw.html')
 
@@ -533,28 +535,65 @@ def grabar_datos(request):
     
     return render(request)
 
-# SECCION PARA TOMAR LOS DATOS DE PAYPAL Y 
-# Y GUARDAR EN LA TABLA DE CLIENTE 
-"""
-from django.views.decorators.csrf import csrf_exempt
-from paypal.standard.models import PayPalIPN
-from django.http import HttpResponse
-from .models import Cliente
+# views PARA PAYPAL
+from .forms import ClienteForm
+from .paypal import paypalrestsdk
 
-@csrf_exempt
-def paypal_ipn_receiver(request):
-    if request.method == "POST":
-        ipn_obj = PayPalIPN.objects.create(**request.POST.dict())
+def pagar_con_paypal(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            cliente = form.save(commit=False)
+            cliente.status = '0'  # Asignar 0 inicialmente
+            cliente.save()
 
-        if ipn_obj.payment_status == "Completed":
-            Cliente.objects.create(
-                nombre=ipn_obj.first_name + " " + ipn_obj.last_name,
-                email=ipn_obj.payer_email,
-                ciudad=ipn_obj.address_city,
-                transaction_id=ipn_obj.txn_id,
-                monto=ipn_obj.mc_gross,
-            )
-            return HttpResponse("OK")
-    return HttpResponse("FAIL")
+            payment = paypalrestsdk.Payment({
+                "intent": "sale",
+                "payer": {"payment_method": "paypal"},
+                "redirect_urls": {
+                    "return_url": request.build_absolute_uri(f"/paypal/success/{cliente.id}/"),
+                    "cancel_url": request.build_absolute_uri(f"/paypal/cancel/{cliente.id}/")
+                },
+                "transactions": [{
+                    "item_list": {
+                        "items": [{
+                            "name": "Compra",
+                            "sku": "item",
+                            "price": "2.00",
+                            "currency": "USD",
+                            "quantity": 1
+                        }]
+                    },
+                    "amount": {
+                        "total": "2.00",
+                        "currency": "USD"
+                    },
+                    "description": "Pago de ejemplo"
+                }]
+            })
 
-"""
+            if payment.create():
+                for link in payment.links:
+                    if link.rel == "approval_url":
+                        return redirect(link.href)
+            else:
+                print(payment.error)
+
+    else:
+        form = ClienteForm()
+
+    return render(request, 'checkout.html', {'form': form})
+
+def paypal_success(request, cliente_id):
+    cliente = Cliente.objects.get(id=cliente_id)
+    cliente.status = '1'
+    cliente.fecha_compra = date.today()
+    cliente.save()
+    return redirect(/'dw')
+
+def paypal_cancel(request, cliente_id):
+    cliente = Cliente.objects.get(id=cliente_id)
+    cliente.status = '0'
+    cliente.fecha_compra = date.today()
+    cliente.save()
+    return redirect('/checkout')
