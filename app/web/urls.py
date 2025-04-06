@@ -28,8 +28,8 @@ urlpatterns = [
     path('compra',views.compra,name='compra'),
     path('confirmarPedido',views.confirmarPedido,name='confirmarPedido'),
     path('dw',views.dw,name='dw'),
-    path('gracias',views.gracias,name='gracias')
-    path('checkout/', views.pagar_con_paypal, name='checkout'),
+    path('gracias',views.gracias,name='gracias'),
+    path('checkout', views.pagar_con_paypal, name='checkout'),
     path('paypal/success/<int:cliente_id>/', views.paypal_success, name='paypal_success'),
     path('paypal/cancel/<int:cliente_id>/', views.paypal_cancel, name='paypal_cancel'),
 ]

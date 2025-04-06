@@ -587,13 +587,13 @@ def pagar_con_paypal(request):
 def paypal_success(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     cliente.status = '1'
-    cliente.fecha_compra = date.today()
+    # cliente.fecha_compra = date.today()
     cliente.save()
-    return redirect(/'dw')
+    return redirect('/dw')
 
 def paypal_cancel(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     cliente.status = '0'
-    cliente.fecha_compra = date.today()
+    # cliente.fecha_compra = date.today()
     cliente.save()
     return redirect('/checkout')
