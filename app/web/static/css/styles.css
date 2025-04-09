@@ -1,19 +1,18 @@
- 
-* *, *:before, *:after {
-    box-sizing: border-box;
-}
 
+/*  * *, *:before, *:after {
+    box-sizing: border-box;
+}  */
 
 .fondo-amarillo {
     background: hsl(53, 100%, 51%);
-    background: hsl(50, 90%, 69%); amarillo boton paypal 
+    background: hsl(50, 90%, 69%); /* amarillo boton paypal  */
     /* rgb 255,193,7,1 */
 }
 .fondo-amarilloclaro {
-    /*--fondo: hsl(60, 85%, 75%); amarillo claro*/
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
 }
 .fondo-azulclaro {
-    background: hsl(165,15%,85%)
+    background: hsl(165,15%,85%);
 /*    --fondo-azulclaro: hsl(165,15%,85%); */
 }
 .fondo-verdeclaro {
@@ -21,19 +20,19 @@
 }
 
 .site-header {  
-    /* --fondo-amarillo: hsl(53, 100%, 51%); */
     margin-top: 0;
-    /* --fondo-header: hsl(110,100%,80%);  */
-    --fondo-header: hsl(95,35%,50%);  /* #87a34e */
+    /* --fondo-header: hsl(95,35%,50%);  #87a34e */
+    --fondo-header: hsl(50,90%,69%);
     height: 6rem;
     display: block;  
-    background: url(../img/LOGO-CUADRADO.jpg) no-repeat, 
-                var(--fondo-header);
+    /* background: url(../img/LOGOx-CUADRADO.jpg) no-repeat, */
+    background: var(--fondo-header); 
+        
     background-position: 1em;
     background-size: contain;
     text-align: center;
     /* font-size:  1.5rem; */
-    padding: 0.5rem; 
+    padding: 0.2rem; 
 }
 .site-header-paypal {  
     /* --fondo-amarillo: hsl(53, 100%, 51%); */
@@ -44,8 +43,8 @@
     width: 100%;
     height: 6rem;
     display: block;  
-    background: url(../img/logoHF.jpg) no-repeat, 
-                var(--fondo-header);
+    /* background: url(../img/logoHF.jpg) no-repeat,  */
+    background: var(--fondo-header);
     background-position: 1em;
     background-size: contain;
     text-align: center;
@@ -56,10 +55,8 @@ h1, h2, h3, h4, h5 {
     font-style: normal;
 }
 h1 {
-    /* margin: 1.4rem; */
-    
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
 h2 {
     margin: 0;
@@ -82,7 +79,6 @@ h5 {
     font-size: 1.5rem;
     line-height: 1.2;
     font-weight: 400;
-    /* color: white; */
 }
 
 p {
@@ -94,11 +90,12 @@ p {
 }
 
 .space {
-    --fondo: hsl(90,100%,80%); /* verde claro */
-    /*--fondo: hsl(60, 85%, 75%); amarillo claro*/
+    /* --fondo: hsl(90,100%,80%);  verde claro */
+    /* --fondo: hsl(90, 85%, 78%); amarillo claro*/
     width: auto;
     height: 1rem;
-    background: var(--fondo);
+    /* background: var(--fondo); */
+    background: white;
 }
 .space50 {
     --fondo: hsl(90,100%,80%); /* verde claro */
@@ -108,16 +105,17 @@ p {
     background:  var(--fondo);
 }
 .container {
-    --fondo: hsl(90,100%,80%); /* verde claro */
+    /*--fondo: hsl(90,100%,80%);*/ /* verde claro */
     /* --fondo: hsl(86,17%,63%); */
-    /* --fondo: hsl(60, 85%, 75%); amarillo claro */
+    --fondo: hsl(60, 85%, 78%);  /* amarillo claro */
     width: auto;
     height: auto;
-    background: var(--fondo);
+    /* background: var(--fondo); */
+    background: white;
 }
 .container2 {
     /* USO en entorno4 */
-    --fondo: hsl(90,100%,80%); /* verde claro */
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
     width: auto;
     height: auto;
     background: var(--fondo);
@@ -133,7 +131,7 @@ p {
 }
 .container4 {
     /* USO: en Seccion de Precio */
-    --fondo: hsl(90,100%,80%); /* verde claro */
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
     display: block;
     width: 100%;
     height: 25rem;
@@ -158,10 +156,12 @@ p {
     }
 }
 .imagen {
+    /* USADO EN entorno1  */
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
     display: block;
     width: 22rem; 
     height: auto;
-    background-color: azure; 
+    background-color: var(--fondo); /* azure; */
     border-radius: 1em; 
     padding: .5rem; 
     margin: 0 auto;
@@ -171,7 +171,7 @@ p {
 .imagen2 {
     /* USO en entorno3.html ultima imagen */
     --fondo-header: hsl(110,100%,80%); /* verde del header */    
-    --fondo: hsl(60, 71%, 15%); /* amarillo-cafe oscuro*/
+    --fondo: hsl(60, 71%, 25%); /* amarillo-cafe oscuro*/
     display: block;
     width: 25rem;
     height: auto;
@@ -183,6 +183,7 @@ p {
     text-align: center;
     
     h5 {
+        font-size: 1.2rem;
         font-style: normal;
         padding: 0;
         line-height: 1.3;
@@ -193,6 +194,7 @@ p {
     /* USO en index.html */
     --fondo-header: hsl(90,100%,80%); /* verde del header */    
     --fondo: hsl(90,100%,80%); /* verde claro */
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
     display: block;
     width: 25rem;
     height: auto;
@@ -205,11 +207,11 @@ p {
     h5 {
         font-size: 1.5rem;
     }
-    border: .01rem solid black;
+    border: none; /* .01rem solid gblack; */
 }
 .imagen4 {
     /* USO en index.html */
-    --fondo: hsl(90,100%,80%); /* verde claro */
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
     display: block;
     width: 30rem;
     height: auto;
@@ -249,7 +251,8 @@ a {
     display: block;  
     background: var(--fondo-boton);
     text-decoration: none;
-    padding: .5em;
+    /* padding: .5em; */
+    border: none;
     border-radius: .9em;
     margin: auto; 
     width: 15rem;
@@ -259,6 +262,7 @@ a {
     text-decoration: none;
     h3 {
         color: white;
+        padding: .5rem;
     }
 }
 .boton2 {
@@ -282,7 +286,7 @@ a {
     --fondo-boton: hsl(45,90%,50%);
     display: inline-block;  
     background: var(--fondo-boton);
-    padding: .5em;
+    /* padding: .5em;  */
     border-radius: .9em;
     margin-left: auto;
     margin-top: 22%;
@@ -292,7 +296,22 @@ a {
     font-size: 1.1rem;
     h3 {
         color: white;
+        padding: .5rem;
     }
+}
+.boton-pago {
+    /* background-color: #0070ba; */
+    color: white;
+    font-size: 18px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+    transition: background-color 0.3s ease;
 }
 .box1 {
     /* USO: Garantia de Devolucion  */
@@ -329,14 +348,14 @@ a {
     }
     p {
         font-size: 1.2rem;
-        font-type: normal;
+        font-style: normal;
     }   
 }
 .foot {
     /* USO: en Preguntas Frecuentes */
     --fondo: hsl(240, 5%, 10%); /* gris */
     width: auto;
-    height: 3rem;
+    height: 3.5rem;
     background: var(--fondo); 
     /* background-position: left 10%; */
     padding: .6rem;
@@ -344,4 +363,10 @@ a {
        color: white;
        font-weight: 100;
     }
+}
+.centrar-paypal {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
 }

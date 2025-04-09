@@ -1,65 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
     <meta charset="UTF-8">
-    <title>Checkout - Pago con PayPal</title>
-    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pago</title>
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #F2F4EC;
-            padding: 2rem;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .form-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+         .containerPaypal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+            width: 35rem;
+            margin-top:3rem;
+        } 
+        label {
+            font-weight: bold;
+        } 
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        h2 {
-            text-align: center;
-            color: #435739;
-        }
-        .paypal-button-container {
-            margin-top: 2rem;
-            text-align: center;
-        }
+        #paypal-button-container {
+            margin-top: 15px;
+        } 
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Completa tus datos</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="paypal-button-container" id="paypal-button-container"></div>
-        </form>
+    <div class="site-header-paypal">
+        <h1>Formulario de Pago</h1>
     </div>
 
-    <script>
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '10.00'  // 💲 Ajusta el valor real de la compra aquí
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    // Redirigir a vista de éxito
-                    window.location.href = "/paypal-success/";
-                });
-            },
-            onCancel: function (data) {
-                // Redirigir a vista de cancelación
-                window.location.href = "/paypal-cancel/";
-            }
-        }).render('#paypal-button-container');
-    </script>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="boton" style="border:none"><p>Continuar con el pago</p></button>
+    </form>
 </body>
 </html>

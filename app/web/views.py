@@ -1,14 +1,17 @@
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .models import Categoria, Proveedor, Producto, Cliente, Pedido, PedidoDetalle
+from .models import Categoria, Producto, Cliente, Pedido, PedidoDetalle
 
 from django.conf import settings
 from django import template
-from datetime import date
+from .forms import ClienteForm
 
-# Paypal de prueba
-# from paypal.standard.forms import PayPalPaymentsForm
+from django.http import HttpResponse, FileResponse
+from django.http import HttpResponseForbidden
+
+from django.core.exceptions import PermissionDenied
 
 register = template.Library()
 
@@ -275,6 +278,28 @@ def registrarPedido(request):
 def compra(request):
     return render(request,'compra.html')
 
+# Paypal de prueba
+from paypal.standard.forms import PayPalPaymentsForm
+
+def view_that_asks_for_money(request):
+
+    # What you want the button to do.
+    paypal_dict = {
+        "business": "sb-nc043e38051110@business.example.com",  # modificar el correo
+        "amount": "7.00",
+        "item_name": "ebook Hijos Felices",
+        "invoice": "100-HF",
+        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+        "return": request.build_absolute_uri('/'),
+        "cancel_return": request.build_absolute_uri('/logout'),
+        "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
+    }
+
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    context = {"form": form}
+    return render(request, "payment.html", context)
+
 # confirmar pedido: registra el pedido y detalle de pedido en la base de datos
 # manda el flujo al boton de pago de paypal
 
@@ -329,7 +354,7 @@ def confirmarPedido(request):
 
         #Creamos boton de paypal
         paypal_dict = {
-            "business": settings.PAYPAL_BUSINESS_EMAIL,
+            "business": 'sb-nc043e38051110@business.example.com', # settings.PAYPAL_BUSINESS_EMAIL,  # modificar el correo
             "amount": montoTotal,
             "item_name": "eBook Hijos Felices"+numPedido,
             "invoice": numPedido,
@@ -469,25 +494,48 @@ def entorno4(request):
 
 def checkout(request):
     if request.method == 'POST':
-        dataUsuario = request.POST['name']
-        dataPassword = request.POST['apellidos']
-        dataDestino = request.POST['destino']
-        print('name en checkout: ',DataUsuario)
-        print('apellidos en checkout: ',DataDestino)
-        input()
-    crearUsuario(request)
-    
-    return render(request,'checkout.html')
-    
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            cliente = form.save(commit=False)
+            cliente.status = '0'  # Estado inicial: no pagado
+            cliente.save()
+            print("ID del cliente guardado:", cliente.id)
+            return redirect('web:pago_paypal', cliente_id=cliente.id) #  Redirige a la vista de pago
 
-def dw(request):
-    #paypalId = request.GET.get('PayerID',None)
-    # print("paypalId al inicio de dw ",paypalId)
-    #context = {}
-    #if paypalId is None:
-    #    return redirect('/entorno4')
+    else:
+        form = ClienteForm()
 
-    return render(request,'dw.html')
+    return render(request, 'checkout.html', {'form': form})
+
+def pago_requerido(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+        cliente_id = kwargs.get('cliente_id')
+        cliente = get_object_or_404(Cliente, id=cliente_id)
+        if cliente.status != '1':  # Si el cliente no ha pagado, redirige
+            raise PermissionDenied  # O redirige a otra página (como checkout)
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
+
+# @pago_requerido
+def dw(request, cliente_id):
+    try:
+        cliente = Cliente.objects.get(id=cliente_id)
+    except Cliente.DoesNotExist:
+        print(f"Cliente con id {cliente_id} no encontrado")
+        return redirect('web:checkout')
+    
+    if cliente.status != '1':  # Si el cliente no pagó
+        print(f"Cliente con id {cliente_id} no ha pagado")
+        return redirect('web:checkout')  # O redirigir a una página de advertencia
+    
+    if cliente.descargas >= 1:  # Limita a 1 descarga
+        return HttpResponseForbidden("Llegaste al numero maximo de descargas, si hay un error, puedes enviar un email a: hijosfelicesmx@gmail.com")  # Prohibir más descargas
+    
+    # Si es la primera descarga, incrementamos el contador
+    cliente.descargas += 1
+    cliente.save()
+
+    return render(request, 'dw.html', {'cliente': cliente})
 
 def grabar_datos(request):
     # crea registro de usuarios
@@ -535,65 +583,46 @@ def grabar_datos(request):
     
     return render(request)
 
-# views PARA PAYPAL
-from .forms import ClienteForm
+# import paypalrestsdk
 from .paypal import paypalrestsdk
 
-def pagar_con_paypal(request):
-    if request.method == 'POST':
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            cliente = form.save(commit=False)
-            cliente.status = '0'  # Asignar 0 inicialmente
-            cliente.save()
+# VISTA PARA INICIAR EL PAGO EN PAYPAL
 
-            payment = paypalrestsdk.Payment({
-                "intent": "sale",
-                "payer": {"payment_method": "paypal"},
-                "redirect_urls": {
-                    "return_url": request.build_absolute_uri(f"/paypal/success/{cliente.id}/"),
-                    "cancel_url": request.build_absolute_uri(f"/paypal/cancel/{cliente.id}/")
-                },
-                "transactions": [{
-                    "item_list": {
-                        "items": [{
-                            "name": "Compra",
-                            "sku": "item",
-                            "price": "2.00",
-                            "currency": "USD",
-                            "quantity": 1
-                        }]
-                    },
-                    "amount": {
-                        "total": "2.00",
-                        "currency": "USD"
-                    },
-                    "description": "Pago de ejemplo"
-                }]
-            })
+#07/abril/2025
 
-            if payment.create():
-                for link in payment.links:
-                    if link.rel == "approval_url":
-                        return redirect(link.href)
-            else:
-                print(payment.error)
+def pago_paypal(request, cliente_id):
+    cliente = get_object_or_404(Cliente, id=cliente_id)
+    return render(request, 'pago_paypal.html', {
+        'cliente': cliente,
+        'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID
+    })
 
-    else:
-        form = ClienteForm()
 
-    return render(request, 'checkout.html', {'form': form})
-
+# VISTAS DE EXITO Y CANCELACION
+#07/abril/2025
 def paypal_success(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
-    cliente.status = '1'
-    # cliente.fecha_compra = date.today()
+    cliente.status = '1'  # Pagado
     cliente.save()
-    return redirect('/dw')
+    return redirect('web:dw',cliente_id=cliente.id)  # Redirige a la página de descarga o gracias
 
 def paypal_cancel(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
-    cliente.status = '0'
-    # cliente.fecha_compra = date.today()
+    cliente.status = '0'  # No pagado / cancelado
     cliente.save()
-    return redirect('/checkout')
+    return redirect('web:checkout')
+
+def descargar_pdf(request):
+    # Define la ruta al archivo PDF
+    file_path = os.path.join(settings.MEDIA_ROOT, 'Hijos Seguros - Hijos Felices.pdf')
+    
+    # Verifica si el archivo existe
+    if os.path.exists(file_path):
+        # Abre el archivo y lo lee en modo binario
+        with open(file_path, 'rb') as pdf_file:
+            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="Hijos_Seguros_Hijos_Felices.pdf"'
+            return response
+    else:
+        return HttpResponse("El archivo no existe", status=404)
+    

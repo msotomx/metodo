@@ -9,20 +9,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=124">
+    
+</head>
+<body>
     <div class="site-header">
         <h1>La Comunicación con Nuestros Hijos</h1>
     </div>
-</head>
-<body>
     <div class="space"></div>
     <div class="container2">
         <div class="imagen4">
             <h5>"No solo vas a Mejorar la Comunicación con tus 
                 Hijos, además vas a conocer una herramienta que 
-                brindará a tus hijos de gran seguridad y fortaleza,
-                para que en cualquer situación futura, puedan sentirse 
+                brindará a tus hijos de gran seguridad y fortaleza
+                y, en cualquer situación futura, puedan sentirse 
                 seguros y fuertes para salir adelante".
             </h5>
         </div>
@@ -36,6 +36,7 @@
         </div>
         
     </div>
+
     <div class="space"></div>
     <div class="space"></div>
     <div class="container4">
@@ -98,6 +99,11 @@
         </div>
     </div> <!-- container5 -->
     
+        <a class="boton" href="{% url 'web:checkout' %}"> 
+            <h3>COMPRAR AHORA</h3>
+        </a>
+    
+
     <div class="space"></div>
     <div class="space"></div>
     <div class="foot">
