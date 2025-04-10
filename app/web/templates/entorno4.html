@@ -4,26 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HijosFelices | Entorno4</title>
+    <title>Hijos Felices</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon-48x48.jpg' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=124">
     
 </head>
 <body>
     <div class="site-header">
-        <h1>La Comunicación con Nuestros Hijos</h1>
+        <h1>El Método</h1>
     </div>
     <div class="space"></div>
     <div class="container2">
         <div class="imagen4">
             <h5>"No solo vas a Mejorar la Comunicación con tus 
                 Hijos, además vas a conocer una herramienta que 
-                brindará a tus hijos de gran seguridad y fortaleza
-                y, en cualquer situación futura, puedan sentirse 
-                seguros y fuertes para salir adelante".
+                brindará a tus hijos de gran seguridad y fortaleza,
+                para en cualquier situación futura, puedan sentirse 
+                seguros y salir adelante".
             </h5>
         </div>
     </div>
@@ -40,9 +41,14 @@
     <div class="space"></div>
     <div class="space"></div>
     <div class="container4">
+        <a href="{% url 'web:checkout' %}">
+            <img src="{%static 'img/COMPRAR_AHORA.jpg' %}" alt="Comprar Ahora" />
+        </a>
+        <!--  
         <a class="boton4" href="{% url 'web:checkout' %}"> 
             <h3>COMPRAR AHORA</h3>
         </a>
+        -->
     </div>
 <a href=""></a>
     <!--    <div class="space"></div>
@@ -61,6 +67,20 @@
             </p>
         </div>
         <div class="box2">
+            <h3>¿En qué casos se puede aplicar el método?</h3>
+            <p>Eliminar hábitos negativos | Mejorar la comunicación ! 
+               Aumentar la Seguridad y Autoestima | Eliminar discusiones
+               en casa | Transmitir valores | ¿Tu hijo usa drogas? |
+               ¿Te preocupa el entorno, redes sociales, amigos, escuela?, 
+               aquí encontrarás la solución | Se encierra en su cuarto y
+               no hay comunicacion? | No tienes ningún problema, 
+               simplemente quieres anticiparte y estar preparado |
+               El método es sumamente sencillo de aplicar, es una 
+               herramienta increíble (para ti y tus hijos), después de
+               conocerla no querrás dejar de usarla nunca 
+            </p>
+        </div>
+        <div class="box2">
             <h3>Qué es lo que voy a recibir al comprar</h3>
             <p>Recibirás un correo electrónico con un enlace 
                para descargar el ebook.
@@ -70,8 +90,8 @@
             <h3>Qué pasa si tengo dudas para implementar el Método con mis Hijos</h3>
             <p>En el ebook, vienen detallados los pasos a seguir, 
                sin embargo, te vamos a proporcionar un video 
-               explicando como se debe implementar el método, muy
-               especialemnte importante si tienes varios hijos de 
+               explicando como se debe implementar el método, 
+               especialmente importante si tienes hijos de 
                etapas diferentes (niños, adolescentes, jóvenes)
             </p>
         </div>

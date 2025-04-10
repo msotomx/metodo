@@ -1,306 +1,185 @@
-
-/*  * *, *:before, *:after {
+/* Global Reset */
+* *, *:before, *:after {
     box-sizing: border-box;
-}  */
-
-.fondo-amarillo {
-    background: hsl(53, 100%, 51%);
-    background: hsl(50, 90%, 69%); /* amarillo boton paypal  */
-    /* rgb 255,193,7,1 */
-}
-.fondo-amarilloclaro {
-    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
-}
-.fondo-azulclaro {
-    background: hsl(165,15%,85%);
-/*    --fondo-azulclaro: hsl(165,15%,85%); */
-}
-.fondo-verdeclaro {
---fondo-verdeclaro: hsl(90,100%,80%);
-}
-
-.site-header {  
-    margin-top: 0;
-    /* --fondo-header: hsl(95,35%,50%);  #87a34e */
-    --fondo-header: hsl(50,90%,69%);
+  }
+  
+  /* ===== Colores y Fondos ===== */
+  .fondo-amarillo {
+    background: hsl(50, 90%, 69%);
+  }
+  
+  .fondo-amarilloclaro {
+    --fondo: hsl(60, 85%, 78%);
+  }
+  
+  .fondo-azulclaro {
+    background: hsl(165, 15%, 85%);
+  }
+  
+  .fondo-verdeclaro {
+    --fondo-verdeclaro: hsl(90, 100%, 80%);
+  }
+  
+  /* ===== Cabecera ===== */
+  .site-header, .site-header-paypal {
     height: 6rem;
-    display: block;  
-    /* background: url(../img/LOGOx-CUADRADO.jpg) no-repeat, */
-    background: var(--fondo-header); 
-        
+    display: block;
+    background: var(--fondo-header, hsl(50, 90%, 69%));
     background-position: 1em;
     background-size: contain;
     text-align: center;
-    /* font-size:  1.5rem; */
-    padding: 0.2rem; 
-}
-.site-header-paypal {  
-    /* --fondo-amarillo: hsl(53, 100%, 51%); */
-    /* --fondo-header: hsl(10,100%,80%); */
-    /* --fondo-header: hsl(53,100%,51%); */
-    --fondo-header: hsl(50,90%,69%);
-    position: absolute; top:0; left: 0;
+    padding: 0.5rem;
+  }
+  
+  .site-header-paypal {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 6rem;
-    display: block;  
-    /* background: url(../img/logoHF.jpg) no-repeat,  */
-    background: var(--fondo-header);
-    background-position: 1em;
-    background-size: contain;
-    text-align: center;
-    padding: 0.5rem; 
-}
-h1, h2, h3, h4, h5 {
-    font-family:'Segoe UI','Ubuntu','Inter','Roboto','Segoe UI';
+  }
+  
+  /* ===== Tipografías ===== */
+  h1, h2, h3, h4, h5 {
+    font-family: 'Segoe UI', 'Ubuntu', 'Inter', 'Roboto', sans-serif;
     font-style: normal;
-}
-h1 {
+  }
+  
+  h1 {
     font-size: 1.5rem;
     font-weight: 500;
-}
-h2 {
+  }
+  
+  h2, h3, h4, h5, p {
+    text-align: center;
     margin: 0;
-    display: block;
-    text-align: center;
-}
-h3 {
-    margin: 0; 
-    text-align: center;
+  }
+  
+  h3, h4 {
     font-size: 1.1rem;
-}
-h4 {
-    margin: 0; 
-    text-align: center;
-    font-size: 1.1rem;
-}
-h5 {
-    padding: .5rem;
-    text-align: center;
-    font-size: 1.5rem;
-    line-height: 1.2;
+  }
+  
+  h5 {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    line-height: 1.3;
     font-weight: 400;
-}
-
-p {
-    margin: 0; 
-    padding: .2rem;
-    text-align: center;
+  }
+  
+  p {
+    padding: 0.2rem;
     font-size: 1.1rem;
     font-weight: 100;
-}
-
-.space {
-    /* --fondo: hsl(90,100%,80%);  verde claro */
-    /* --fondo: hsl(90, 85%, 78%); amarillo claro*/
-    width: auto;
-    height: 1rem;
-    /* background: var(--fondo); */
-    background: white;
-}
-.space50 {
-    --fondo: hsl(90,100%,80%); /* verde claro */
-    /* --fondo: hsl(60, 85%, 75%); amarillo claro */
-    width: 50%;
-    height: 2rem;
-    background:  var(--fondo);
-}
-.container {
-    /*--fondo: hsl(90,100%,80%);*/ /* verde claro */
-    /* --fondo: hsl(86,17%,63%); */
-    --fondo: hsl(60, 85%, 78%);  /* amarillo claro */
-    width: auto;
+  }
+  
+  /* ===== Contenedores ===== */
+  /* 1- en index, 2- entorno4, 3- contenedor de la Garantia
+     4- en seccion de Precio, 5- en Preguntas Frecuentes */
+  .container, .container2 {
+    background: var(--fondo, white);
+    width: 100%;
     height: auto;
-    /* background: var(--fondo); */
-    background: white;
-}
-.container2 {
-    /* USO en entorno4 */
+  }
+  
+  .container2 {
     --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
-    width: auto;
-    height: auto;
     background: var(--fondo);
-}
-.container3 {
-    /* USO: Contenedor de la Garantia */
-    width: auto;
+  }
+  
+  .container3 {
     height: 16rem;
-    background: url(../img/garantia.png) no-repeat,
-                white;
+    background: white;   /* url(../img/garantia.png) no-repeat white; */
     background-size: contain;
     background-position: 75% 20%;
-}
-.container4 {
-    /* USO: en Seccion de Precio */
-    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
-    display: block;
-    width: 100%;
+  }
+  
+  .container4 {
     height: 25rem;
-    background: url(../img/oferta.jpg) no-repeat 20%,
-                var(--fondo);  
+    background: url(../img/COMPRAR_AHORA.jpg) no-repeat 20% var(--fondo, hsl(60, 85%, 78%));
     background-size: contain;
     background-position: 50% 1%;
-    text-align: center; 
-}
-.container5 {
-    /* USO en Preguntas Frecuentes */
-    display: block;
-    width: 100%;
-    height: auto;
+    text-align: center;
+  }
+  
+  .container5 {
     margin: 2%;
     background: hsl(240, 5%, 32%);
-    background-position: left 10%;
     padding: 1rem;
-    h1 {
-        color: white;
-        text-align: center;
-    }
-}
-.imagen {
-    /* USADO EN entorno1  */
-    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
+  }
+  
+  .container5 h1 {
+    color: white;
+  }
+  
+  .space {
+    background: white;
+    height: 1rem;
+  }
+  
+  .space50 {
+    background: var(--fondo, hsl(90, 100%, 80%));
+    width: 50%;
+    height: 2rem;
+  }
+  
+  /* ===== Imágenes ===== */
+  /* imagen - en entorno1, 2- en entorno3 ultima imagen
+     3- en index, 4- en index  */
+  .imagen, .imagen2, .imagen3, .imagen4 {
     display: block;
-    width: 22rem; 
+    width: 100%;
+    max-width: 30rem;
     height: auto;
-    background-color: var(--fondo); /* azure; */
-    border-radius: 1em; 
-    padding: .5rem; 
+    background-color: var(--fondo, hsl(60, 85%, 78%));
+    border-radius: 1em;
+    padding: 0.5rem;
     margin: 0 auto;
-    text-align: center; 
- /*    font-size: 1.2rem; */
-}
-.imagen2 {
-    /* USO en entorno3.html ultima imagen */
-    --fondo-header: hsl(110,100%,80%); /* verde del header */    
-    --fondo: hsl(60, 71%, 25%); /* amarillo-cafe oscuro*/
-    display: block;
-    width: 25rem;
-    height: auto;
-    background: var(--fondo);
-    border-radius: 1em; 
-    /* margin-left: 40%; */
-    margin: 0 auto;
-    padding: .5rem;   
     text-align: center;
-    
-    h5 {
-        font-size: 1.2rem;
-        font-style: normal;
-        padding: 0;
-        line-height: 1.3;
-        color: white;
-    }
-}
-.imagen3 {
-    /* USO en index.html */
-    --fondo-header: hsl(90,100%,80%); /* verde del header */    
-    --fondo: hsl(90,100%,80%); /* verde claro */
-    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
-    display: block;
-    width: 25rem;
-    height: auto;
-    background: var(--fondo);
-    border-radius: 1em; 
-    /* margin-left: 40%; */
-    margin: 0 auto;
-    padding: .5rem;   
-    text-align: center;
-    h5 {
-        font-size: 1.5rem;
-    }
-    border: none; /* .01rem solid gblack; */
-}
-.imagen4 {
-    /* USO en index.html */
-    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
-    display: block;
-    width: 30rem;
-    height: auto;
-    background: var(--fondo);
-    margin: 0 auto;
-    padding: .5rem;   
-    text-align: center;
-    font-size: 1.2rem;
-}
-
-.blanco {
-    display: block;
-    width: auto;
-    height: 16rem; 
-    background: blue;
-}
-
-a {
-    background: var(--nuevo-bg);
-    text-decoration:none; 
-    
-}
-.imagen:hover {
-    opacity: .8;
+  }
+  
+  .imagen:hover {
+    opacity: 0.8;
     background: hsl(53, 100%, 51%);
-    h3 {
-        font-size: 1.5rem;    
-    }
-    p {
-        font-size: 1.5rem;    
-    }
-}
-.boton {
-    /* USO: En index.html */
-    /* --fondo-boton: hsl(50,90%,69%); */
-    --fondo-boton: hsl(45,90%,50%);
-    display: block;  
-    background: var(--fondo-boton);
-    text-decoration: none;
-    /* padding: .5em; */
+  }
+  
+  /* ===== Botones ===== */
+  /* boton - en index, entorno1, entorno2, entorno3, entorno4
+     boton4 - entorno4   */
+  .boton, .boton2, .boton4 {
+    --fondo-boton: hsl(45, 90%, 50%); /* #e6b800 */
+    display: block;
+    background: var(--fondo-boton); 
     border: none;
-    border-radius: .9em;
-    margin: auto; 
-    width: 15rem;
-    height: 2.8rem;
+    border-radius: 0.9em;
+    margin: auto;
     text-align: center;
     font-size: 1.1rem;
     text-decoration: none;
+  }
+  
+  .boton {
+    width: 15rem;
+    height: 2.8rem;
     h3 {
         color: white;
         padding: .5rem;
     }
-}
-.boton2 {
-    /* USO: En second, third.html */
-    --fondo-boton: hsl(45,90%,50%);
-    background: var(--fondo-boton);
-    text-decoration: none;
-    padding: .5em;
-    border-radius: .9em;
-    margin: auto; 
+  }
+  
+  .boton2 {
     width: 12rem;
     height: 2.4rem;
-    text-align: center;
-    font-size: 1.1rem;
-    h3 {
-        color: white;
-    }
-}
-.boton4 {
-    /* USO: En fourth.html */
-    --fondo-boton: hsl(45,90%,50%);
-    display: inline-block;  
-    background: var(--fondo-boton);
-    /* padding: .5em;  */
-    border-radius: .9em;
-    margin-left: auto;
-    margin-top: 22%;
+    padding: 0.5em;
+  }
+  
+  .boton4 {
+    display: inline-block;
     width: 15rem;
     height: 2.8rem;
-    text-align: center;
-    font-size: 1.1rem;
-    h3 {
-        color: white;
-        padding: .5rem;
-    }
-}
-.boton-pago {
-    /* background-color: #0070ba; */
+    margin-left: auto;
+    margin-top: 22%;
+  }
+  
+  .boton-pago {
     color: white;
     font-size: 18px;
     padding: 12px 24px;
@@ -312,61 +191,79 @@ a {
     margin: 20px auto;
     display: block;
     transition: background-color 0.3s ease;
-}
-.box1 {
-    /* USO: Garantia de Devolucion  */
-    width: 18rem;
-    height: 15rem;
-    background: hsl(240, 5%, 22%); /* gris */
-    border-radius: .8rem;
-    margin-left: 25%; 
-    margin-top: 1.5rem;
-    text-align: center;
+  }
+  
+  /* ===== Cajas ===== */
+  .box1, .box2 {
+    background: hsl(240, 5%, 22%);   /* gris */
+    border-radius: 0.8rem;
     padding: 2rem;
-    color: white; 
-    h3 {
-        font-size: 1.8rem;
-    }
-    p {
-        font-size: 1.2rem;
-    }
-}
-.box2 {
-    /* USO: en Preguntas Frecuentes */
-    width: auto; 
-    height: auto; /*7.5rem; */
-    background-color: azure; 
-    border-radius: 1em; 
-    padding: .5rem; 
-    margin-left: 10%;
-    margin-right: 10%; 
-    margin-top:1rem; 
-    text-align: center; 
+    color: white;
+    text-align: center;
+  }
+  
+  .box1 {
+    width: 90%;
+    max-width: 18rem;
+    height: auto;
+    margin: 1.5rem auto;
+  }
+  
+  .box2 {
+    background-color: azure;
+    margin: 1rem 10%;
     font-size: 1.2rem;
-    h3 {
-        font-size: 1.4rem;
-    }
-    p {
-        font-size: 1.2rem;
-        font-style: normal;
-    }   
-}
-.foot {
-    /* USO: en Preguntas Frecuentes */
-    --fondo: hsl(240, 5%, 10%); /* gris */
-    width: auto;
+    color: black;
+  }
+  
+  .foot {
+    background: var(--fondo, hsl(240, 5%, 10%));
     height: 3.5rem;
-    background: var(--fondo); 
-    /* background-position: left 10%; */
-    padding: .6rem;
-    h3 {
-       color: white;
-       font-weight: 100;
-    }
-}
-.centrar-paypal {
+    padding: 0.6rem;
+    text-align: center;
+    color: white;
+    font-weight: 100;
+  }
+  
+  .centrar-paypal {
     display: flex;
     justify-content: center;
     margin-top: 20px;
     width: 100%;
-}
+  }
+  
+  /* ===== Enlaces ===== */
+  a {
+    background: var(--nuevo-bg);
+    text-decoration: none;
+  }
+  
+  /* ===== Media Queries ===== */
+  @media (max-width: 1024px) {
+    .imagen, .imagen2, .imagen3, .imagen4,
+    .box1, .box2, .boton, .boton2, .boton4 {
+      width: 90% !important;
+      font-size: 1.2rem !important; /*original 1rem */
+    }
+  
+    .container3, .container4 {
+      background-size: cover;
+      background-position: center;
+    }
+  
+    h1, h2, h3, h4, h5, p {
+      font-size: 1.2rem;  /*original 1rem */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    h1, h2, h3, h4, h5, p {
+      font-size: 0.9rem;  
+    }
+  
+    .site-header, .site-header-paypal {
+      height: auto;
+      padding: 1rem;
+    }
+  }
+  
