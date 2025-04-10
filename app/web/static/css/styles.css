@@ -139,10 +139,9 @@
   }
 
   .imagen4 {
-    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
-    background: url(../img/COMPRAR_AHORA.jpg) no-repeat,
-                var(--fondo);
-    background-size: contain;
+    h5 {
+      font-size: 1.2rem;
+    }
   }
   
   .imagen5 {
