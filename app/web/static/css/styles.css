@@ -135,6 +135,12 @@
     margin: 0 auto;
     text-align: center;
   }
+
+  .imagen4 {
+    --fondo: hsl(60, 85%, 78%); /* amarillo claro*/
+    background: url(../img/COMPRAR_AHORA.jpg) no-repeat,
+                var(--fondo);
+  }
   
   .imagen:hover {
     opacity: 0.8;
