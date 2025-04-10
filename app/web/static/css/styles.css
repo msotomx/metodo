@@ -138,7 +138,12 @@
     text-align: center;
   }
 
+  .imagen3 {
+    max-width: 20rem;
+  }
+
   .imagen4 {
+    max-width: 20rem;
     h5 {
       font-size: 1.2rem;
     }
@@ -278,8 +283,12 @@
       background-position: center;
     }
   
-    h1, h2, h3, h4, h5, p {
+    h2, h3, h4, h5, p {
       font-size: 1.2rem;  /*original 1rem */
+    }
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 600;
     }
   }
   
