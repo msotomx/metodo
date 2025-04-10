@@ -139,11 +139,12 @@
   }
 
   .imagen3 {
-    max-width: 20rem;
+    max-width: 24rem;
+    font-size: 1.2rem;
   }
 
   .imagen4 {
-    max-width: 20rem;
+    max-width: 24rem;
     h5 {
       font-size: 1.2rem;
     }
@@ -289,6 +290,11 @@
     h1 {
       font-size: 1.3rem;
       font-weight: 600;
+    }
+    .boton {
+      h3 {
+        padding: .2rem;
+      }
     }
   }
   
