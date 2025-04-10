@@ -137,7 +137,8 @@ STATIC_ROOT = '/usr/src/app/staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = '/usr/src/app/media'
 MEDIA_URL = '/media/'
 
 PAYPAL_TEST = config('PAYPAL_TEST', default=True, cast=bool)
