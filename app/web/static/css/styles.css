@@ -171,9 +171,11 @@
   /* ===== Botones ===== */
   /* boton - en index, entorno1, entorno2, entorno3, entorno4
      boton4 - entorno4   */
-  .boton, .boton2, .boton4 {
+  .boton {
     --fondo-boton: hsl(45, 90%, 50%); /* #e6b800 */
     display: block;
+    width: 15rem;
+    height: 2.8rem;
     background: var(--fondo-boton); 
     border: none;
     border-radius: 0.9em;
@@ -181,31 +183,14 @@
     text-align: center;
     font-size: 1.1rem;
     text-decoration: none;
-  }
-  
-  .boton {
-    width: 15rem;
-    height: 2.8rem;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
     h3 {
         color: white;
-        padding: .5rem;
     }
   }
-  
-  .boton2 {
-    width: 12rem;
-    height: 2.4rem;
-    padding: 0.5em;
-  }
-  
-  .boton4 {
-    display: inline-block;
-    width: 15rem;
-    height: 2.8rem;
-    margin-left: auto;
-    margin-top: 22%;
-  }
-  
+    
   .boton-pago {
     color: white;
     font-size: 18px;
