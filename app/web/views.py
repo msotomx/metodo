@@ -614,7 +614,7 @@ def paypal_cancel(request, cliente_id):
 
 def descargar_pdf(request):
     # Define la ruta al archivo PDF
-    file_path = os.path.join(settings.MEDIA_ROOT, 'Hijos Seguros - Hijos Felices.pdf')
+    file_path = os.path.join(settings.MEDIA_ROOT, 'Hijos_Seguros_Hijos_Felices.pdf')
     
     # Verifica si el archivo existe
     if os.path.exists(file_path):
