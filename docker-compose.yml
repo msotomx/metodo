@@ -23,8 +23,10 @@ services:
     volumes:
       - ./app/staticfiles:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/media
+      - /etc/letsencrypt:/etc/letsencrypt 
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
     networks:
