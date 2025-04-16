@@ -1,3 +1,5 @@
+<!-- Version ya probada, solo que no aparece el otro boton de pago con tarjeta -->
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -31,18 +33,25 @@
     </div>
 
     <!-- SDK de PayPal con ajustes para evitar conflictos -->
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD&intent=capture&commit=true&components=buttons&disable-funding=card"></script>
 
-    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD&intent=capture&commit=true"></script>
-    
     <!-- Botón de pago -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const PAYPAL_POPUP_FALLBACK = true; // Forzar nueva pestaña si hay error
+
             paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    label: 'paypal'
+                },
                 fundingSource: paypal.FUNDING.PAYPAL,
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
-                            amount: { value: "1.00" }
+                            amount: {
+                                value: "7.00"
+                            }
                         }]
                     });
                 },
@@ -54,11 +63,9 @@
                 onCancel: function(data) {
                     window.location.href = "{% url 'web:paypal_cancel' cliente.id %}";
                 },
-                onClick: function() {
-                    // Este cambio ayuda a forzar el redirect
-                    if (window.innerWidth < 800) {
-                        paypal.Buttons().close(); // Cierra cualquier intento de popup
-                    }
+                onError: function (err) {
+                console.error("PayPal error:", err);
+                alert("Hubo un error al iniciar el pago. Intenta desde otra pestaña o dispositivo.");
                 }
             }).render('#paypal-button-container');
         });

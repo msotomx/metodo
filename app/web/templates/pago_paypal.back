@@ -12,9 +12,8 @@
     <div class="site-header-paypal">
         <h1>Formulario de Pago</h1>
     </div>
-
     <br><br><br><br><br><br><br>
-
+    
     <h2>Resumen del Cliente</h2>
     <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
     <p><strong>Email:</strong> {{ cliente.email }}</p>
@@ -25,40 +24,40 @@
     
     <h3>Pagar con PayPal</h3>
     <br>
-    <h3>Pago Único: $7.00 USD</h3>
-    <div class="centrar-paypal" style="margin-top: 20px;">
+    <h3>Pago Unico:  $7.00 usd</h3>
+    <div class="centrar-paypal">
         <div class="boton-pago" id="paypal-button-container"></div>
     </div>
 
-    <!-- SDK de PayPal con ajustes para evitar conflictos -->
-
-    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD&intent=capture&commit=true"></script>
-    
-    <!-- Botón de pago -->
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {        
             paypal.Buttons({
                 fundingSource: paypal.FUNDING.PAYPAL,
+                onClick: function () {
+                    // 👇 Esta línea ayuda a mantener el foco en la ventana principal
+                    setTimeout(() => {
+                        window.focus();
+                    }, 300); // un pequeño delay ayuda a que funcione mejor
+                },
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
-                            amount: { value: "1.00" }
+                            amount: {
+                                value: "7.00"  // Cambia esto por el monto real si es variable
+                            }
                         }]
                     });
                 },
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
+                        // Redirigir al éxito
                         window.location.href = "{% url 'web:paypal_success' cliente.id %}";
                     });
                 },
                 onCancel: function(data) {
+                    // Redirigir al cancelar
                     window.location.href = "{% url 'web:paypal_cancel' cliente.id %}";
-                },
-                onClick: function() {
-                    // Este cambio ayuda a forzar el redirect
-                    if (window.innerWidth < 800) {
-                        paypal.Buttons().close(); // Cierra cualquier intento de popup
-                    }
                 }
             }).render('#paypal-button-container');
         });

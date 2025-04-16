@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pago Cancelado - Hijos Felices</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-color: #ffebee;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .mensaje {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .mensaje h1 {
+            color: #c62828;
+        }
+        .mensaje p {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="mensaje">
+        <h1>Pago Cancelado</h1>
+        <p>Tu pago fue cancelado, {{ cliente.nombre }}.</p>
+        <p>Si fue un error, puedes intentar nuevamente.</p>
+        <br>
+        <a class="btn" href="{% url 'web:checkout' %}">Reintentar</a>
+    </div>
+</body>
+</html>

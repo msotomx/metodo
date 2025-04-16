@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pago Exitoso - Hijos Felices</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-color: #e8f5e9;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .mensaje {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .mensaje h1 {
+            color: #2e7d32;
+        }
+        .mensaje p {
+            font-size: 1.1rem;
+        }
+        .btn-descargar {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-descargar:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="mensaje">
+        <h1>¡Gracias por tu pago!</h1>
+        <p>Tu transacción fue exitosa, {{ cliente.nombre }}.</p>
+        <p>Puedes descargar el eBook aqui:</p>
+        <br>
+        <a href="{% url 'web:descargar_pdf' %}" target="_blank" class="btn-descargar">Descargar en formato PDF</a>
+        <!-- <p>Revisa tu correo electrónico: <strong>{{ cliente.email }}</strong> para más detalles.</p>  -->
+        <br>
+        <br>
+        <a class="btn" href="{% url 'web:index' %}">Volver al Inicio</a>
+    </div>
+</body>
+</html>

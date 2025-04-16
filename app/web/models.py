@@ -54,9 +54,9 @@ class Cliente(models.Model):
     descargas = models.IntegerField(default=0)  # Nuevo campo para contar las descargas
     
     def __str__(self):
-        return self.rfc
+        return self.nombre
 
-class comunicaCliente(models.Model):
+class ComunicaCliente(models.Model):
     cliente = models.ForeignKey(Cliente,on_delete=models.RESTRICT)
     fecha_contacto = models.DateTimeField(auto_now_add=True)
     comunicacion = models.TextField(null=True)
