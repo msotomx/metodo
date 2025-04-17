@@ -1,0 +1,37 @@
+
+====
+def paypal_success(request, cliente_id):
+    token = request.GET.get('token')
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+
+    # Obtener token de acceso
+    auth = (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_CLIENT_SECRET)
+    data = {'grant_type': 'client_credentials'}
+    r = requests.post(f'{settings.PAYPAL_API_BASE}/v1/oauth2/token',
+                      auth=auth,
+                      data=data,
+                      headers={'Content-Type': 'application/x-www-form-urlencoded'})
+    access_token = r.json()['access_token']
+
+    # Capturar orden
+    headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}'}
+    r = requests.post(f'{settings.PAYPAL_API_BASE}/v2/checkout/orders/{token}/capture', headers=headers)
+
+    if r.status_code == 201 or r.status_code == 200:
+        cliente.status = '1'  # Pagado
+        cliente.save()
+        return render(request, 'success.html', {'cliente': cliente})
+    else:
+        redirect_url = reverse('web:checkout')
+        html = f"""
+        <html>
+            <head>
+                <meta http-equiv="refresh" content="6;url={redirect_url}">
+            </head>
+            <body style="text-align:center; font-family:sans-serif; padding-top:50px;">
+                <h2>Error al capturar el pago.</h2>
+                <p>Serás redirigido al formulario en unos segundos...</p>
+            </body>
+        </html>
+        """
+        return HttpResponse(html)

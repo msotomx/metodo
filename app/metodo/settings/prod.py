@@ -155,8 +155,7 @@ ADMIN_USER_EMAIL = config('ADMIN_USER_EMAIL')
 PAYPAL_MODE = config('PAYPAL_MODE')
 PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
 PAYPAL_CLIENT_SECRET = config('PAYPAL_CLIENT_SECRET')
-PAYPAL_API_BASE = 'https://api-m.paypal.com'  # para producción
-# o 'https://api-m.sandbox.paypal.com' si estás en sandbox
+PAYPAL_API_BASE = config('PAYPAL_API_BASE')
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True

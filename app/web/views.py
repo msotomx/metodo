@@ -14,6 +14,8 @@ from django.http import HttpResponseForbidden
 from django.core.exceptions import PermissionDenied
 
 import requests  # USADO EN VERSION 2.0 PAYPAL
+import json
+
 
 register = template.Library()
 
@@ -501,7 +503,6 @@ def checkout(request):
             cliente = form.save(commit=False)
             cliente.status = '0'  # Estado inicial: no pagado
             cliente.save()
-            print("ID del cliente guardado:", cliente.id)
             return redirect('web:pago_paypal', cliente_id=cliente.id) #  Redirige a la vista de pago
 
     else:
@@ -598,7 +599,6 @@ from .paypal import paypalrestsdk
 #        'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID
 #    })
 
-
 # VISTAS DE EXITO Y CANCELACION
 #07/abril/2025
 # FUNCION VERSION 1.0 PAYPAL 
@@ -630,29 +630,56 @@ def descargar_pdf(request):
         return HttpResponse("El archivo no existe", status=404)
 
 # FUNCION VERSION 2.0 PAYPAL QUITANDO LA PAGINA EN BLANCO
+
 def paypal_success(request, cliente_id):
-    token = request.GET.get('token')
     cliente = get_object_or_404(Cliente, pk=cliente_id)
+    token = request.GET.get('token')
 
-    # Obtener token de acceso
+    if not token:
+        return HttpResponse("❌ Token no proporcionado por PayPal")
+
+    # 1. Obtener access token
     auth = (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_CLIENT_SECRET)
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     data = {'grant_type': 'client_credentials'}
-    r = requests.post(f'{settings.PAYPAL_API_BASE}/v1/oauth2/token',
-                      auth=auth,
-                      data=data,
-                      headers={'Content-Type': 'application/x-www-form-urlencoded'})
-    access_token = r.json()['access_token']
+    r = requests.post(f'{settings.PAYPAL_API_BASE}/v1/oauth2/token', auth=auth, data=data, headers=headers)
+    access_token = r.json().get('access_token')
 
-    # Capturar orden
-    headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}'}
-    r = requests.post(f'{settings.PAYPAL_API_BASE}/v2/checkout/orders/{token}/capture', headers=headers)
-
-    if r.status_code == 201 or r.status_code == 200:
-        cliente.status = '1'  # Pagado
+    # 2. Consultar estado de la orden
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {access_token}',
+    }
+    r = requests.get(f'{settings.PAYPAL_API_BASE}/v2/checkout/orders/{token}', headers=headers)
+    resultado = r.json()
+    
+    if resultado.get('status') == 'COMPLETED':
+        cliente.status = '1'
         cliente.save()
-        return render(request, 'success.html', {'cliente': cliente})
+        return redirect('web:dw',cliente_id=cliente.id)
+        # return render(request, 'dw.html', {'cliente': cliente})
+
+    elif resultado.get('status') == 'APPROVED':
+        # 3. Capturar orden
+        r = requests.post(
+            f'{settings.PAYPAL_API_BASE}/v2/checkout/orders/{token}/capture',
+            headers=headers
+        )
+        captura = r.json()
+        
+        if captura.get('status') == 'COMPLETED':
+            cliente.status = '1'
+            cliente.save()
+            return redirect('web:dw',cliente_id=cliente.id)
+            # return render(request, 'dw.html', {'cliente': cliente})
+        else:
+            return HttpResponse("❌ Error al capturar el pago.")
+
     else:
-        return HttpResponse("Error al capturar el pago.")
+        return HttpResponse(f"❌ El pago no se completó. Estado: {resultado.get('status')}")
+
+#
+#        return HttpResponse("Error al capturar el pago.")
 
 # FUNCION VERSION 2.0 PAYPAL QUITANDO LA PAGINA EN BLANCO
 def paypal_cancel(request, cliente_id):
@@ -668,13 +695,21 @@ def pago_paypal(request, cliente_id):
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     data = {'grant_type': 'client_credentials'}
     r = requests.post(f'{settings.PAYPAL_API_BASE}/v1/oauth2/token', auth=auth, data=data, headers=headers)
-    access_token = r.json()['access_token']
+    access_token = r.json().get('access_token')
 
-    # 2. Crear orden
+    if not access_token:
+        return HttpResponse("Error al obtener el token de acceso")
+
+    # 2. Construir URLs de retorno y cancelación
+    return_url = request.build_absolute_uri(reverse('web:paypal_success', args=[cliente.id]))  # paypal_success
+    cancel_url = request.build_absolute_uri(reverse('web:paypal_cancel', args=[cliente.id]))  # paypal_cancel
+
+        # 3. Crear la orden de PayPal
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {access_token}',
     }
+
     orden_data = {
         "intent": "CAPTURE",
         "purchase_units": [{
@@ -684,15 +719,16 @@ def pago_paypal(request, cliente_id):
             }
         }],
         "application_context": {
-            "return_url": request.build_absolute_uri(reverse('web:paypal_success', args=[cliente.id])),
-            "cancel_url": request.build_absolute_uri(reverse('web:paypal_cancel', args=[cliente.id]))
+            "return_url": return_url,
+            "cancel_url": cancel_url
         }
     }
+
     r = requests.post(f'{settings.PAYPAL_API_BASE}/v2/checkout/orders', json=orden_data, headers=headers)
     respuesta = r.json()
 
-    # 3. Redirigir al usuario a PayPal
-    for link in respuesta['links']:
+        # 4. Redirigir al usuario al enlace de aprobación
+    for link in respuesta.get('links', []):
         if link['rel'] == 'approve':
             return redirect(link['href'])
 

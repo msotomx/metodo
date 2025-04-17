@@ -47,6 +47,7 @@ from django.contrib.auth.models import User
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=60, null=True)
+    fecha_compra = models.DateTimeField(auto_now_add=True)
     email = models.EmailField(null=True)
     telefono = models.CharField(max_length=13)
     ciudad = models.CharField(max_length=100, null=True)
@@ -86,5 +87,5 @@ class PedidoDetalle(models.Model):
     cantidad = models.IntegerField(default=1)
     subtotal = models.DecimalField(max_digits=10,decimal_places=2)
 
-    def __str__(delf):
+    def __str__(self):
         return self.producto.nombre

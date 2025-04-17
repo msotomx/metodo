@@ -40,16 +40,15 @@
     </div>
     <div class="container">
         <br> <br> <br>
-        
-        <h2>Descargar el ebook aqui:</h2>
-        <!-- Descarga el archivo -->
-        <!-- <a href="/media/giros.jpg" download="giros.jpg" class="btn-descargar">Descargar PDF</a> -->
-        <!-- Lo abre en una pestaña en blanco -->
+        <h2>Tu transacción fue exitosa, {{ cliente.nombre }}.</h2>
+        <h2>Puedes descargar el eBook aqui:</h2>
+
         <br> <br>
         <a href="{% url 'web:descargar_pdf' %}" target="_blank" class="btn-descargar">Descargar en formato PDF</a>
-
-        <div class="space"></div>
-        <div class="space"></div>
+        <br>
+        <br>
+        <a class="btn" href="{% url 'web:index' %}">Volver al Inicio</a>
+        
     </div>
 </body>
 </html>
